@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, 
+                #1a0a10 0%, 
+                #2d0f1a 20%, 
+                #3d1224 40%,
+                #4a1a2e 60%,
+                #3d1224 80%,
+                #2d0f1a 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts throughout the page */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            opacity: 0.12;
+            animation: float-drift 20s infinite ease-in-out;
+            color: #ff6b8a;
+        }
+
+        @keyframes float-drift {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.12;
+            }
+            90% {
+                opacity: 0.12;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Starry Night Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Shooting star */
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            border-radius: 50%;
+            animation: shoot 3s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(500px) translateY(500px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: radial-gradient(ellipse at center, rgba(255, 107, 138, 0.08) 0%, transparent 70%);
+        }
+
+        .hero-hearts {
+            font-size: 3rem;
+            letter-spacing: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #ffc0cb;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1s forwards;
+            text-shadow: 0 0 40px rgba(255, 192, 203, 0.3);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 2s forwards, bounce 2s ease-in-out 3s infinite;
+        }
+
+        .scroll-hint span {
+            font-size: 0.8rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            color: rgba(255, 192, 203, 0.6);
+        }
+
+        .scroll-hint .arrow {
+            font-size: 1.5rem;
+            color: #ff6b8a;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Message sections */
+        .message-section {
+            background: radial-gradient(ellipse at center, rgba(255, 107, 138, 0.05) 0%, transparent 70%);
+        }
+
+        .message-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            text-align: center;
+            max-width: 700px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease-out;
+        }
+
+        .message-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Love Letter Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #ffb6c1;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            width: 0;
+            display: inline-block;
+        }
+
+        .typewriter.visible {
+            width: auto;
+            animation: typing 3s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #ffb6c1; }
+        }
+
+        .message-text .line {
+            display: block;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .message-text.visible .line {
+            animation: fadeInLine 0.8s ease-out forwards;
+        }
+
+        .message-text.visible .line:nth-child(1) { animation-delay: 0s; }
+        .message-text.visible .line:nth-child(2) { animation-delay: 0.8s; }
+        .message-text.visible .line:nth-child(3) { animation-delay: 1.6s; }
+
+        @keyframes fadeInLine {
+            0% { 
+                opacity: 0; 
+                transform: translateY(10px);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+
+        .letter-char {
+            display: inline-block;
+            opacity: 0;
+            animation: letterAppear 0.1s ease forwards;
+        }
+
+        @keyframes letterAppear {
+            to { opacity: 1; }
+        }
+
+        .message-text em {
+            color: #ffb6c1;
+            font-style: italic;
+        }
+
+        .heart-divider {
+            margin: 2rem 0;
+            font-size: 1.5rem;
+            color: #ff6b8a;
+            opacity: 0.6;
+            letter-spacing: 1rem;
+        }
+
+        /* Photo Section */
+        .photo-section {
+            min-height: 120vh;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 138, 0.1) 0%, transparent 60%);
+        }
+
+        .photo-container {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1.2s ease-out;
+        }
+
+        .photo-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .photo-frame {
+            position: relative;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b8a, #ff8fa3, #ffb6c1, #ff8fa3, #ff6b8a);
+            border-radius: 20px;
+            box-shadow: 
+                0 0 60px rgba(255, 107, 138, 0.4),
+                0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, #ff6b8a, #ffb6c1, #ff6b8a);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+        }
+
+        .photo-frame img {
+            display: block;
+            max-width: 350px;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .corner-heart {
+            position: absolute;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 138, 0.8));
+        }
+
+        .corner-heart.top-left { top: -15px; left: -15px; }
+        .corner-heart.top-right { top: -15px; right: -15px; }
+        .corner-heart.bottom-left { bottom: -15px; left: -15px; }
+        .corner-heart.bottom-right { bottom: -15px; right: -15px; }
+
+        .photo-caption {
+            margin-top: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #ffb6c1;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-out 0.5s;
+        }
+
+        .photo-container.visible .photo-caption {
+            opacity: 1;
+        }
+
+        /* Question Section */
+        .question-section {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 138, 0.12) 0%, transparent 60%);
+        }
+
+        .question-container {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease-out;
+        }
+
+        .question-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question-pretext {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            color: rgba(255, 182, 193, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .question-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 60px rgba(255, 107, 138, 0.5);
+        }
+
+        .question-highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            font-style: italic;
+            background: linear-gradient(135deg, #ff6b8a, #ffb6c1, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: pulse-text 3s ease-in-out infinite;
+        }
+
+        .question-note {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 182, 193, 0.7);
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 80px;
+        }
+
+        button {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.15rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .yes-btn {
+            padding: 1.2rem 3.5rem;
+            background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+            color: white;
+            box-shadow: 
+                0 4px 25px rgba(255, 107, 138, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 8px 40px rgba(255, 107, 138, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .no-btn {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: rgba(255, 182, 193, 0.5);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Celebration overlay */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .heart-confetti {
+            font-size: 1.8rem;
+        }
+
+        /* Success Section */
+        .success-section {
+            display: none;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 138, 0.15) 0%, transparent 60%);
+        }
+
+        .success-section.visible {
+            display: flex;
+        }
+
+        .success-container {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .success-hearts {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .success-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 60px rgba(255, 107, 138, 0.5);
+        }
+
+        .success-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: #ffb6c1;
+            margin-bottom: 2rem;
+        }
+
+        .success-emoji {
+            font-size: 6rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .message-text {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+
+            .photo-frame img {
+                max-width: 280px;
+            }
+
+            .question-main {
+                font-size: 2.5rem;
+            }
+
+            .question-highlight {
+                font-size: 3rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .success-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Music Control Button */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 107, 138, 0.3);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            color: #ffb6c1;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 107, 138, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Calendar Planner Styles */
+        .calendar-planner {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .day-card {
+            background: rgba(255, 107, 138, 0.1);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .day-card.valentines-day {
+            background: rgba(255, 107, 138, 0.15);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            box-shadow: 0 0 30px rgba(255, 107, 138, 0.2);
+        }
+
+        .day-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .day-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            display: block;
+        }
+
+        .day-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #ffb6c1;
+            letter-spacing: 0.1rem;
+        }
+
+        .time-slot {
+            margin-bottom: 1.5rem;
+        }
+
+        .time-slot:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .slot-time {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            cursor: pointer;
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-btn {
+            display: block;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 107, 138, 0.2);
+            border-color: rgba(255, 182, 193, 0.4);
+        }
+
+        .option input:checked + .option-btn {
+            background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+            border-color: #ff6b8a;
+            color: #fff;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(255, 107, 138, 0.4);
+        }
+
+        .option-note {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: rgba(255, 182, 193, 0.6);
+            font-style: italic;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .submit-btn {
+            margin-top: 1.5rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 25px rgba(255, 107, 138, 0.5);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 35px rgba(255, 107, 138, 0.6);
+        }
+
+        .final-confirmation {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 107, 138, 0.15);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            border-radius: 20px;
+            animation: fadeIn 0.8s ease-out;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .final-confirmation.visible {
+            display: block;
+        }
+
+        .confirmation-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .confirmation-content p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #ffb6c1;
+            margin-bottom: 1.5rem;
+        }
+
+        .selected-plans {
+            text-align: center;
+        }
+
+        .selected-plans .plan-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .selected-plans .plan-item:last-child {
+            border-bottom: none;
+        }
+
+        .selected-plans .plan-label {
+            color: #ffb6c1;
+            font-weight: 500;
+        }
+
+        .screenshot-reminder {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Suggestions Section */
+        .suggestions-section {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 1.5rem;
+        }
+
+        .suggestions-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: #ffb6c1;
+            margin-bottom: 0.8rem;
+            text-align: left;
+        }
+
+        .suggestions-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .suggestions-input::placeholder {
+            color: rgba(255, 182, 193, 0.5);
+        }
+
+        .suggestions-input:focus {
+            outline: none;
+            border-color: #ff6b8a;
+            background: rgba(255, 107, 138, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="Daniel Caesar - Who Knows (Official Lyric Video).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🔇 Play Music</button>
+
+    <!-- Floating background hearts -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Starry night background -->
+    <div class="stars" id="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- Celebration confetti container -->
+    <div class="celebration" id="celebration"></div>
+
+    <!-- Main content wrapper -->
+    <div id="mainContent">
+        <!-- Section 1: Hero -->
+        <section class="hero">
+            <div class="hero-hearts">💕 💗 💕</div>
+            <h1>Dear Sneaky Link #1 ✨</h1>
+            <div class="scroll-hint">
+                <span>Scroll down</span>
+                <div class="arrow">♡</div>
+            </div>
+        </section>
+
+        <!-- Section 2: First Message -->
+        <section class="message-section">
+            <p class="message-text" data-animate data-typewriter>
+                <span class="line">I know the first time I asked</span>
+                <span class="line"><em>wasn't right</em>...</span>
+            </p>
+        </section>
+
+        <!-- Section 3: Second Message -->
+        <section class="message-section">
+            <p class="message-text" data-animate data-typewriter>
+                <span class="line">So I made you this site</span>
+                <span class="line">so that you wouldn't <em>bite</em> (me) 😅</span>
+            </p>
+            <div class="heart-divider">♡ ♡ ♡</div>
+        </section>
+
+        <!-- Section 4: Photo -->
+        <section class="photo-section">
+            <div class="photo-container" data-animate>
+                <div class="photo-frame">
+                    <span class="corner-heart top-left">💗</span>
+                    <span class="corner-heart top-right">💗</span>
+                    <span class="corner-heart bottom-left">💗</span>
+                    <span class="corner-heart bottom-right">💗</span>
+                    <img src="IMG_6152.png" alt="You">
+                </div>
+                <p class="photo-caption">The most beautiful girl in the world 💕</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Third Message -->
+        <section class="message-section">
+            <p class="message-text" data-animate data-typewriter>
+                <span class="line">Your laugh is <em>contagious</em></span>
+                <span class="line">and smile so bright...</span>
+            </p>
+            <div class="heart-divider">💕</div>
+        </section>
+
+        <!-- Section 6: The Question -->
+        <section class="question-section">
+            <div class="question-container" data-animate>
+                <h2 class="question-main">Will you be my</h2>
+                <h2 class="question-highlight">Valentine tonight? 💕</h2>
+                <p class="question-note">(and for Valentine's Day ofc lol)</p>
+                
+                <div class="buttons">
+                    <button class="yes-btn" onclick="sayYes()">Yes! 💖</button>
+                    <button class="no-btn" id="noBtn" onmouseover="escapeButton()" onclick="escapeButton()">No</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Success Section -->
+    <section class="success-section" id="successSection">
+        <div class="success-container">
+            <div class="success-hearts">💕 💖 💕</div>
+            <h2 class="success-title">You just made me<br>the happiest! 🥰</h2>
+            <p class="success-subtitle">Now let's plan our Valentine's weekend...</p>
+            
+            <!-- Calendar Planner -->
+            <div class="calendar-planner">
+                
+                <!-- February 13th -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-date">February 13th</span>
+                        <span class="day-label">Friday Date Night</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="slot-time">🌙 Dinner</span>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="feb13-dinner" value="home-cooked">
+                                <span class="option-btn">🍳 Home Cooked Meal</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb13-dinner" value="omakase">
+                                <span class="option-btn">🍣 Omakase</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb13-dinner" value="malatang">
+                                <span class="option-btn">🌶️ Malatang</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- February 14th -->
+                <div class="day-card valentines-day">
+                    <div class="day-header">
+                        <span class="day-date">February 14th</span>
+                        <span class="day-label">💕 Valentine's Day 💕</span>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="slot-time">🌅 Morning</span>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="feb14-morning" value="breakfast-bed">
+                                <span class="option-btn">🛏️ Breakfast in Bed</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-morning" value="matcha">
+                                <span class="option-btn">🍵 Matcha Spot</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-morning" value="bagels">
+                                <span class="option-btn">🥯 Bagels</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="slot-time">☀️ Noon</span>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="feb14-noon" value="home-cooked-3">
+                                <span class="option-btn">👨‍🍳 Home Cooked Meal #3</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-noon" value="salad">
+                                <span class="option-btn">🥗 Salad 💀</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-noon" value="beli">
+                                <span class="option-btn">📍 Restaurant off my Beli</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="slot-time">🌤️ Afternoon</span>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="feb14-afternoon" value="climbing">
+                                <span class="option-btn">🧗 Climbing</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-afternoon" value="xuanzhuan">
+                                <span class="option-btn">🎠 Xuanzhuan muma</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-afternoon" value="trainer">
+                                <span class="option-btn">💪 Personal Trainer</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="slot-time">🌙 Dinner</span>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="feb14-dinner" value="steak">
+                                <span class="option-btn">🥩 Jonathan's Steak Special</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-dinner" value="cocktails">
+                                <span class="option-btn">🍸 Cocktail Bar</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="feb14-dinner" value="omakase-2">
+                                <span class="option-btn">🍣 Omakase pt 2</span>
+                            </label>
+                        </div>
+                        <p class="option-note">(please don't choose omakase twice 😂)</p>
+                    </div>
+                </div>
+
+            </div>
+
+                <!-- Suggestions Section -->
+                <div class="suggestions-section">
+                    <label class="suggestions-label">💡 Any other ideas or suggestions?</label>
+                    <textarea id="suggestionsInput" class="suggestions-input" placeholder="Type your ideas here... (optional)"></textarea>
+                </div>
+
+            <button class="submit-btn" onclick="submitChoices()">Lock It In 💕</button>
+            
+            <!-- Final Confirmation -->
+            <div class="final-confirmation" id="finalConfirmation">
+                <div class="confirmation-content">
+                    <h3>It's a date! 💕</h3>
+                    <p>Can't wait to spend Valentine's with you 🥰</p>
+                    <div class="selected-plans" id="selectedPlans"></div>
+                    <p class="screenshot-reminder">Thank you for making Jonathan the luckiest guy in the world, please send a screenshot to him! 💕</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Create floating background hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '♡', '❤️'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+                heart.style.animationDelay = Math.random() * 20 + 's';
+                heart.style.animationDuration = (18 + Math.random() * 12) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('[data-animate]');
+            
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight * 0.75) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        // Escape button logic
+        const noBtn = document.getElementById('noBtn');
+        let escapeCount = 0;
+        const escapeMessages = [
+            "Nope 😏",
+            "Try again 💨",
+            "Can't catch me 😜",
+            "Nice try 🏃‍♀️",
+            "Not today 💕",
+            "Just say yes 🥺",
+            "Please? 💖",
+            "I'll keep running 💗"
+        ];
+
+        function escapeButton() {
+            escapeCount++;
+            
+            noBtn.textContent = escapeMessages[Math.min(escapeCount - 1, escapeMessages.length - 1)];
+            
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            const newX = Math.max(20, Math.random() * maxX);
+            const newY = Math.max(20, Math.random() * maxY);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.zIndex = '100';
+            noBtn.style.transition = 'all 0.15s ease-out';
+            
+            if (escapeCount > 5) {
+                noBtn.style.transform = `scale(${Math.max(0.5, 1 - escapeCount * 0.05)})`;
+                noBtn.style.opacity = Math.max(0.3, 1 - escapeCount * 0.08);
+            }
+        }
+
+        // Celebration confetti
+        function createConfetti() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#ff6b8a', '#ff8fa3', '#ffb6c1', '#ffc0cb', '#fff', '#ff4d6d'];
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘', '💞', '♡'];
+            
+            for (let i = 0; i < 120; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    
+                    if (Math.random() > 0.4) {
+                        confetti.className += ' heart-confetti';
+                        confetti.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    } else {
+                        confetti.style.width = (8 + Math.random() * 8) + 'px';
+                        confetti.style.height = confetti.style.width;
+                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    }
+                    
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    
+                    celebration.appendChild(confetti);
+                    
+                    const fallDuration = 3500 + Math.random() * 2500;
+                    const horizontalDrift = (Math.random() - 0.5) * 300;
+                    
+                    confetti.animate([
+                        { 
+                            transform: 'translateY(0) rotate(0deg)', 
+                            opacity: 1 
+                        },
+                        { 
+                            transform: `translateY(${window.innerHeight + 50}px) translateX(${horizontalDrift}px) rotate(${Math.random() * 1080}deg)`, 
+                            opacity: 0.9
+                        }
+                    ], {
+                        duration: fallDuration,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    });
+                    
+                    setTimeout(() => confetti.remove(), fallDuration);
+                }, i * 25);
+            }
+        }
+
+        // Yes button click
+        function sayYes() {
+            document.getElementById('mainContent').classList.add('hidden');
+            const successSection = document.getElementById('successSection');
+            successSection.classList.add('visible');
+            
+            noBtn.style.display = 'none';
+            
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
+            createConfetti();
+            setTimeout(createConfetti, 2500);
+            setTimeout(createConfetti, 5000);
+        }
+
+        // Initialize
+        createFloatingHearts();
+        createStars();
+        window.addEventListener('scroll', handleScrollAnimations);
+        handleScrollAnimations(); // Check on load
+
+        // Create starry background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            
+            // Create regular stars
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 3 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+
+            // Create occasional shooting stars
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createShootingStar();
+                }
+            }, 4000);
+        }
+
+        function createShootingStar() {
+            const starsContainer = document.getElementById('stars');
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.left = Math.random() * 70 + '%';
+            shootingStar.style.top = Math.random() * 30 + '%';
+            starsContainer.appendChild(shootingStar);
+            
+            setTimeout(() => shootingStar.remove(), 3000);
+        }
+
+        // Music Control
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = '🔇 Play Music';
+                isPlaying = false;
+            } else {
+                bgMusic.play();
+                musicBtn.textContent = '🔊 Pause';
+                isPlaying = true;
+            }
+        }
+
+        // Submit choices
+        function submitChoices() {
+            const choices = {
+                'feb13-dinner': { label: 'Feb 13 Dinner', value: null },
+                'feb14-morning': { label: 'Feb 14 Morning', value: null },
+                'feb14-noon': { label: 'Feb 14 Noon', value: null },
+                'feb14-afternoon': { label: 'Feb 14 Afternoon', value: null },
+                'feb14-dinner': { label: 'Feb 14 Dinner', value: null }
+            };
+
+            let allSelected = true;
+
+            for (const name in choices) {
+                const selected = document.querySelector(`input[name="${name}"]:checked`);
+                if (selected) {
+                    choices[name].value = selected.parentElement.querySelector('.option-btn').textContent;
+                } else {
+                    allSelected = false;
+                }
+            }
+
+            if (!allSelected) {
+                alert("Pick something for each time slot babe! 💕");
+                return;
+            }
+
+            // Show confirmation
+            const plansDiv = document.getElementById('selectedPlans');
+            plansDiv.innerHTML = '';
+
+            for (const name in choices) {
+                const item = document.createElement('div');
+                item.className = 'plan-item';
+                item.innerHTML = `<span class="plan-label">${choices[name].label}:</span> ${choices[name].value}`;
+                plansDiv.appendChild(item);
+            }
+
+            // Add suggestions if any
+            const suggestions = document.getElementById('suggestionsInput').value.trim();
+            if (suggestions) {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'plan-item suggestions-item';
+                suggestionItem.innerHTML = `<span class="plan-label">💡 Suggestions:</span> ${suggestions}`;
+                plansDiv.appendChild(suggestionItem);
+            }
+
+            document.getElementById('finalConfirmation').classList.add('visible');
+            document.querySelector('.submit-btn').style.display = 'none';
+            document.querySelector('.suggestions-section').style.display = 'none';
+            
+            // More confetti!
+            createConfetti();
+        }
+    </script>
+</body>
+</html>
